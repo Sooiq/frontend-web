@@ -1,11 +1,13 @@
 // src/App.tsx
 import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Layout from "./components/layout/Layout";
 
 import Dashboard from "./pages/Dashboard";
 import News from "./pages/News";
-import NewsArticle from './pages/NewsArticle';
+import NewsArticle from "./pages/NewsArticle";
 import ForecastDashboard from "./pages/ForecastDashboard";
 import Stocks from "./pages/Stocks";
 import Settings from "./pages/Settings";
@@ -17,6 +19,7 @@ import Welcome from "./pages/Welcome";
 const App: React.FC = () => {
   return (
     <BrowserRouter>
+      <ToastContainer />
       <Routes>
         {/* Authentication Routes (no layout) */}
         <Route path="/signup" element={<SignUp />} />
@@ -73,12 +76,12 @@ const App: React.FC = () => {
           }
         />
         {/* Add a redirect for the base /forecast route */}
-        <Route 
-          path="/forecast" 
-          element={<Navigate to="/forecast/dashboard" replace />} 
+        <Route
+          path="/forecast"
+          element={<Navigate to="/forecast/dashboard" replace />}
         />
         {/* Redirect root to signup for now */}
-        <Route path="/" element={<Navigate to="/welcome" replace />} />
+        <Route path="/" element={<Navigate to="/login" replace />} />
       </Routes>
     </BrowserRouter>
   );

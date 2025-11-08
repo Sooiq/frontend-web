@@ -1,6 +1,7 @@
 export interface UserResDto {
   id: string;
-  name: string;
+  first_name: string;
+  last_name?: string | null;
   email: string;
   username: string;
   country_of_residence: string;
@@ -13,7 +14,8 @@ export interface UserResDto {
 }
 
 export interface RegisterUserReqDto {
-  name: string;
+  first_name: string;
+  last_name?: string | null;
   email: string;
   username: string;
   password: string;
@@ -23,4 +25,9 @@ export interface RegisterUserReqDto {
   play_noti_sound?: boolean;
   provider?: string;
   fcm_token?: string;
+}
+
+export interface UserApiResponse {
+  message: string;
+  result: UserResDto;
 }

@@ -24,7 +24,8 @@ const SignUp: React.FC = () => {
     e.preventDefault();
     try {
       await userService.register({
-        name: `${formData.firstName} ${formData.lastName}`,
+        first_name: formData.firstName,
+        last_name: formData.lastName,
         email: formData.email,
         username: formData.username,
         password: formData.password,

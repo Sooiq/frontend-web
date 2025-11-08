@@ -25,8 +25,8 @@ const Login: React.FC = () => {
       setWatchlist(watchlist); // Store watchlist in Zustand
       toast.success("Login successful!");
       navigate("/dashboard");
-    } catch {
-      toast.error("Login failed!");
+    } catch (error) {
+      toast.error(`Login failed! ${error}`);
     }
   };
 
@@ -77,7 +77,7 @@ const Login: React.FC = () => {
             id="password"
             type="password"
             name="password"
-            placeholder="johndoe1234@gmail.com"
+            placeholder="****************"
             value={formData.password}
             onChange={handleChange}
             className="w-full px-6 py-4 bg-transparent border-2 border-white/30 rounded-[30px] text-white text-[20px] placeholder-gray-400 focus:outline-none focus:border-white/60 transition-all"

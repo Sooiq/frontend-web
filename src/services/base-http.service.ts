@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
  
 import axios, { AxiosError } from 'axios';
-import { toast } from 'react-toastify';
 
 const instance = axios.create({
   baseURL: `${import.meta.env.VITE_API_URL ?? ''}/api/v1`,
@@ -62,19 +61,16 @@ export default class BaseHttpService {
       .catch((error) => this.handleHttpError(error));
   }
 
-  handleHttpError(error: AxiosError<Record<string, any>, unknown>): any {
+  handleHttpError(error: AxiosError<Record<string, any>, unknown>): any {  
     console.error('handleHttpError', {
       error: JSON.stringify(error)
     });
 
     const statusCode = error?.response?.status;
-    const displayMessage = error.response?.data?.errorMessage ?? 'unknown error';
+    const displayMessage = error.response?.data?.detail?.error_message ?? 'unknown error';
 
     if (!statusCode || statusCode >= 300) {
-      toast.error(displayMessage);
       throw new Error(displayMessage);
     }
-
-    return error.response?.data;
   }
 }
