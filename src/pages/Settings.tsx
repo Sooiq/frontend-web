@@ -3,15 +3,15 @@ import { Card } from "../components/ui/Card";
 import { FormInput } from "../components/ui/FormInput";
 import { ToggleSwitch } from "../components/ui/ToggleSwitch";
 import { HiOutlineUserCircle } from "react-icons/hi";
-import { useUserStore } from "../store";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { userService } from "../services";
+import { useDashboardStore } from "../store/useDashboardStore";
 
 const Settings: React.FC = () => {
   // Hard-coded mock data
-  const user = useUserStore((state) => state.user);
-  const clearUser = useUserStore((state) => state.clearUser);
+  const user = useDashboardStore((state) => state.user);
+  const clearUser = useDashboardStore((state) => state.clearUser);
   const navigate = useNavigate();
 
   const handleLogout = async () => {

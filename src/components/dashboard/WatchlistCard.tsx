@@ -2,14 +2,16 @@
 import React from "react";
 import { Card } from "../ui/Card";
 import { HiPlus, HiRefresh } from "react-icons/hi";
-import { useWatchlistStore } from "../../store";
+import { useDashboardStore } from "../../store/useDashboardStore";
 
 const WatchlistCard: React.FC = () => {
-  const watchlist = useWatchlistStore((state) => state.watchlist);
-  const stockPrices = useWatchlistStore((state) => state.stockPrices);
-  const isPricesLoading = useWatchlistStore((state) => state.isPricesLoading);
-  const fetchStockPrices = useWatchlistStore((state) => state.fetchStockPrices);
-  const lastPriceUpdate = useWatchlistStore((state) => state.lastPriceUpdate);
+  const {
+    watchlist,
+    stockPrices,
+    isPricesLoading,
+    fetchStockPrices,
+    lastPriceUpdate,
+  } = useDashboardStore();
   const stocks = watchlist?.stocks ?? [];
 
   const handleRefresh = () => {

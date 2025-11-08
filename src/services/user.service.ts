@@ -21,6 +21,11 @@ class UserService extends BaseHttpService {
   async deleteUser(): Promise<void> {
     await this.delete<void>(`${PATH}`);
   }
+
+  async getMe(): Promise<UserResDto> {
+    const body = await this.get<UserApiResponse>(`${PATH}/me`);
+    return body.result;
+  }
 }
 
 export const userService = new UserService();

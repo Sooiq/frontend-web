@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { useWatchlistStore } from '../store';
+import { useDashboardStore } from '../store/useDashboardStore';
 
 const POLLING_INTERVAL = 30 * 1000; // 30 secs in milliseconds
 
@@ -8,8 +8,8 @@ const POLLING_INTERVAL = 30 * 1000; // 30 secs in milliseconds
  * Automatically starts when component mounts and cleans up on unmount
  */
 export const useStockPricePolling = () => {
-  const fetchStockPrices = useWatchlistStore((state) => state.fetchStockPrices);
-  const watchlist = useWatchlistStore((state) => state.watchlist);
+  const fetchStockPrices = useDashboardStore((state) => state.fetchStockPrices);
+  const watchlist = useDashboardStore((state) => state.watchlist);
   const intervalRef = useRef<number | null>(null);
 
   useEffect(() => {

@@ -3,18 +3,18 @@ import React, { useEffect } from "react";
 import NewsCard from "../components/dashboard/NewsCard";
 import WatchlistCard from "../components/dashboard/WatchlistCard";
 import StockForecastCard from "../components/dashboard/StockForecastCard";
-import { useWatchlistStore } from "../store/useWatchlistStore";
 import { useStockPricePolling } from "../hooks/useStockPricePolling";
+import { useDashboardStore } from "../store/useDashboardStore";
 
 const Dashboard: React.FC = () => {
-  const { fetchWatchlist, isLoading, error } = useWatchlistStore();
+  const { postLogin, isLoading, error } = useDashboardStore();
 
   // Set up automatic price polling every 5 minutes
   useStockPricePolling();
 
   useEffect(() => {
-    fetchWatchlist();
-  }, [fetchWatchlist]);
+    postLogin();
+  }, [postLogin]);
 
   return (
     <div>
