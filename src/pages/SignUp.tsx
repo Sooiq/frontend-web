@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { userService } from "../services/user.service";
 
 const SignUp: React.FC = () => {
   const navigate = useNavigate();
@@ -10,7 +11,6 @@ const SignUp: React.FC = () => {
     lastName: "",
     username: "",
     email: "",
-    phoneNupber: "",
     password: "",
     confirmPassword: "",
   });
@@ -20,12 +20,21 @@ const SignUp: React.FC = () => {
 
   const passwordsMatch = formData.password === formData.confirmPassword;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement sign up logic
-    console.log("Sign up submitted:", formData);
-    toast.success("Sign up successful!");
-    navigate("/login");
+    try {
+      await userService.register({
+        name: `${formData.firstName} ${formData.lastName}`,
+        email: formData.email,
+        username: formData.username,
+        password: formData.password,
+        country_of_residence: "US",
+      });
+      toast.success("Sign up successful!");
+      navigate("/login");
+    } catch (error) {
+      toast.error(`Sign up failed: ${error}`);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -92,24 +101,6 @@ const SignUp: React.FC = () => {
           <div className="grid grid-cols-2 gap-6">
             <div>
               <label
-                htmlFor="username"
-                className="text-white text-[18px] block pb-2"
-              >
-                Username*
-              </label>
-              <input
-                id="username"
-                type="text"
-                name="username"
-                placeholder="john.doe041"
-                value={formData.username}
-                onChange={handleChange}
-                className="w-full px-6 py-4 bg-transparent border-2 border-white/30 rounded-[30px] text-white text-[20px] placeholder-gray-400 focus:outline-none focus:border-white/60 transition-all"
-                required
-              />
-            </div>
-            <div>
-              <label
                 htmlFor="email"
                 className="text-white text-[18px] block pb-2"
               >
@@ -121,6 +112,24 @@ const SignUp: React.FC = () => {
                 name="email"
                 placeholder="johndoe1234@gmail.com"
                 value={formData.email}
+                onChange={handleChange}
+                className="w-full px-6 py-4 bg-transparent border-2 border-white/30 rounded-[30px] text-white text-[20px] placeholder-gray-400 focus:outline-none focus:border-white/60 transition-all"
+                required
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="username"
+                className="text-white text-[18px] block pb-2"
+              >
+                Username*
+              </label>
+              <input
+                id="username"
+                type="text"
+                name="username"
+                placeholder="john.doe041"
+                value={formData.username}
                 onChange={handleChange}
                 className="w-full px-6 py-4 bg-transparent border-2 border-white/30 rounded-[30px] text-white text-[20px] placeholder-gray-400 focus:outline-none focus:border-white/60 transition-all"
                 required
