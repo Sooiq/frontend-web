@@ -1,22 +1,35 @@
 // src/App.tsx
-import React from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import React, { useEffect } from "react";
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Routes,
+  useNavigate
+} from "react-router-dom";
 import Layout from "./components/layout/Layout";
 
 import Dashboard from "./pages/Dashboard";
+import ForecastDashboard from "./pages/ForecastDashboard";
 import News from "./pages/News";
 import NewsArticle from "./pages/NewsArticle";
-import ForecastDashboard from "./pages/ForecastDashboard";
-import Stocks from "./pages/Stocks";
 import Settings from "./pages/Settings";
+import Stocks from "./pages/Stocks";
 
-import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
 import Welcome from "./pages/Welcome";
+import { ToastContainer } from "react-toastify";
 
 const App: React.FC = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check for existing user session (e.g., from localStorage)
+    const storedUser = localStorage.getItem("user");
+    if (!storedUser) navigate("/welcome");
+  }, [navigate]);
+
   return (
     <BrowserRouter>
       <ToastContainer />
