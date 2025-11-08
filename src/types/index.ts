@@ -62,3 +62,14 @@ export interface CompactNewsItem {
   time: string;
   tags: NewsTag[];
 }
+<<<<<<< HEAD
+=======
+
+export interface SectorForecast {
+  id: string;
+  sector: string;
+  returnForecast: number;
+  sentimentScore: number;
+  reason: string;
+}
+>>>>>>> df8ec7a (forecast dashboard page)

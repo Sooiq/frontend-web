@@ -31,3 +31,16 @@
     @apply bg-dark-primary text-gray-100 antialiased font-sans;
   }
 }
+<<<<<<< HEAD
+=======
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+>>>>>>> df8ec7a (forecast dashboard page)

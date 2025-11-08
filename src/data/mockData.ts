@@ -1,5 +1,5 @@
 // src/data/mockData.ts
-import type { NewsItem, WatchlistItem, Recommendation, TopNewsItem, CompactNewsItem } from '../types';
+import type { NewsItem, WatchlistItem, Recommendation, TopNewsItem, CompactNewsItem, SectorForecast } from '../types';
 
 export const mockNews: NewsItem[] = [
   { id: '1', date: '2025.03.02', time: '14:58', title: 'BBCA Buyback', tags: [{ text: 'BBCA', bg: 'bg-red-500' }] },
@@ -76,4 +76,15 @@ export const mockWatchlistNews: CompactNewsItem[] = [
   { id: '1', title: 'Protest on Indonesian Parliament Resumes', date: '2025.03.02', time: '11.00', tags: [{ text: 'BBCA', color: 'red' }, { text: 'BBRI', color: 'red' }, { text: 'ANTM', color: 'green' }] },
   { id: '2', title: 'Protest on Indonesian Parliament Resumes', date: '2025.03.02', time: '11.00', tags: [{ text: 'BBCA', color: 'red' }, { text: 'BBRI', color: 'red' }, { text: 'ANTM', color: 'green' }] },
   { id: '3', title: 'Protest on Indonesian Parliament Resumes', date: '2025.03.02', time: '11.00', tags: [{ text: 'BBCA', color: 'red' }, { text: 'BBRI', color: 'red' }, { text: 'ANTM', color: 'green' }] },
+];
+
+export const mockSectorForecasts: SectorForecast[] = [
+  { id: '1', sector: 'Industrials', returnForecast: 15.4, sentimentScore: 70, reason: 'Global instability and pessimistic public reaction' },
+  { id: '2', sector: 'Financials', returnForecast: 10.4, sentimentScore: 65, reason: '200 billions investment on national banks' },
+  { id: '3', sector: 'Healthcare', returnForecast: 10.4, sentimentScore: 68, reason: '200 billions investment on national banks' },
+  { id: '4', sector: 'Energy', returnForecast: 10.4, sentimentScore: 62, reason: '200 billions investment on national banks' },
+  { id: '5', sector: 'Energy', returnForecast: 10.4, sentimentScore: 62, reason: '200 billions investment on national banks' },
+  { id: '6', sector: 'Industrials', returnForecast: 15.4, sentimentScore: 70, reason: 'Global instability and pessimistic public reaction' },
+  { id: '7', sector: 'Financials', returnForecast: 10.4, sentimentScore: 65, reason: '200 billions investment on national banks' },
+  { id: '8', sector: 'Healthcare', returnForecast: 10.4, sentimentScore: 68, reason: '200 billions investment on national banks' },
 ];

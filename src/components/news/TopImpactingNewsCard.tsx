@@ -29,7 +29,11 @@ const TopImpactingNewsCard: React.FC = () => {
                 Sentiment: {item.sentiment} ({item.sentimentScore}%)
               </span>
             </div>
-            <h3 className="text-lg font-semibold text-white mb-2">{item.title}</h3>
+            <a href="/newsarticle" className="group">
+              <h3 className="text-lg font-semibold text-white mb-2 group-hover:underline">
+                {item.title}
+              </h3>
+            </a>
             <p className="text-sm text-gray-300 mb-4">{item.body}</p>
             <div className="flex gap-2">
               {item.tags.map((tag) => <NewsTag key={tag.text} tag={tag} />)}
