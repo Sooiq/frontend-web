@@ -35,7 +35,7 @@ const App: React.FC = () => {
           }
         />
         {/* Redirect root to signup for now */}
-        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        <Route path="/" element={<Navigate to="/welcome" replace />} />
       </Routes>
     </BrowserRouter>
   );
