@@ -2,7 +2,7 @@
 import React from 'react';
 import { Card } from '../ui/Card';
 import { mockBuys, mockSells } from '../../data/mockData';
-import { Recommendation } from '../../types';
+import type { Recommendation } from '../../types';
 import { HiOutlineChevronDown } from 'react-icons/hi';
 
 // Sub-component to render the recommendation tables

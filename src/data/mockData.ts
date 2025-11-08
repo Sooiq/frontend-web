@@ -1,5 +1,5 @@
 // src/data/mockData.ts
-import { NewsItem, WatchlistItem, Recommendation } from '../types';
+import type { NewsItem, WatchlistItem, Recommendation, TopNewsItem, CompactNewsItem } from '../types';
 
 export const mockNews: NewsItem[] = [
   { id: '1', date: '2025.03.02', time: '14:58', title: 'BBCA Buyback', tags: [{ text: 'BBCA', bg: 'bg-red-500' }] },
@@ -7,7 +7,6 @@ export const mockNews: NewsItem[] = [
   { id: '3', date: '2025.03.02', time: '13:00', title: 'Trump Announced Higher Tariff Rate', tags: [{ text: 'BBCA', bg: 'bg-red-500' }, { text: 'TINS', bg: 'bg-gray-500' }] },
 ];
 
-// Note: You'll need to add placeholder images to /public/logos/bbca.png etc.
 export const mockWatchlist: WatchlistItem[] = [
   { id: '1', ticker: 'BBCA', name: 'Bank Central Asia', logoUrl: '/logos/bbca.png', price: 9000, change: 0.2, changePercent: 5.2 },
   { id: '2', ticker: 'BBCA', name: 'Bank Central Asia', logoUrl: '/logos/bbca.png', price: 9000, change: 0.2, changePercent: 5.2 },
@@ -23,4 +22,58 @@ export const mockSells: Recommendation[] = [
   { id: '1', ticker: 'GOTO', returnForecast: -15.5, reason: 'Low profit news gives strong negative sentiment, double top candle pattern detected' },
   { id: '2', ticker: 'UNVR', returnForecast: -20.5, reason: 'Strong negative public sentiment from boycott news, double top candle pattern detected' },
   { id: '3', ticker: 'BUKA', returnForecast: -4.5, reason: 'Failure to break resistance, low volume, high foreign outflow' },
+];
+
+export const mockTopNews: TopNewsItem[] = [
+  {
+    id: '1',
+    date: '2025.03.02',
+    time: '13.00',
+    sentiment: 'Positive',
+    sentimentScore: 70,
+    title: 'Russia attacked Ukraine',
+    body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ac diam sed purus iaculis mollis. Nulla maximus libero ac eros vestibulum congue.',
+    tags: [
+      { text: 'ANTM', color: 'green' },
+      { text: 'TINS', color: 'green' },
+    ],
+  },
+  {
+    id: '2',
+    date: '2025.03.01',
+    time: '12.58',
+    sentiment: 'Positive',
+    sentimentScore: 70,
+    title: "Protest on Indonesia's Parliament Rising Heat",
+    body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ac diam sed purus iaculis mollis. Nulla maximus libero ac eros vestibulum congue.',
+    tags: [
+      { text: 'ANTM', color: 'green' },
+      { text: 'BBCA', color: 'red' },
+    ],
+  },
+  {
+    id: '3',
+    date: '2025.03.02',
+    time: '11.00',
+    sentiment: 'Positive',
+    sentimentScore: 70,
+    title: 'Trump Tariff War',
+    body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ac diam sed purus iaculis mollis. Nulla maximus libero ac eros vestibulum congue.',
+    tags: [
+      { text: 'ANTM', color: 'green' },
+      { text: 'TINS', color: 'green' },
+    ],
+  },
+];
+
+export const mockDomesticNews: CompactNewsItem[] = [
+  { id: '1', title: 'Protest on Indonesian Parliament Resumes', date: '2025.03.02', time: '11.00', tags: [{ text: 'BBCA', color: 'red' }, { text: 'BBRI', color: 'red' }, { text: 'ANTM', color: 'green' }] },
+  { id: '2', title: 'Protest on Indonesian Parliament Resumes', date: '2025.03.02', time: '11.00', tags: [{ text: 'BBCA', color: 'red' }, { text: 'BBRI', color: 'red' }, { text: 'ANTM', color: 'green' }] },
+  { id: '3', title: 'Protest on Indonesian Parliament Resumes', date: '2025.03.02', time: '11.00', tags: [{ text: 'BBCA', color: 'red' }, { text: 'BBRI', color: 'red' }, { text: 'ANTM', color: 'green' }] },
+];
+
+export const mockWatchlistNews: CompactNewsItem[] = [
+  { id: '1', title: 'Protest on Indonesian Parliament Resumes', date: '2025.03.02', time: '11.00', tags: [{ text: 'BBCA', color: 'red' }, { text: 'BBRI', color: 'red' }, { text: 'ANTM', color: 'green' }] },
+  { id: '2', title: 'Protest on Indonesian Parliament Resumes', date: '2025.03.02', time: '11.00', tags: [{ text: 'BBCA', color: 'red' }, { text: 'BBRI', color: 'red' }, { text: 'ANTM', color: 'green' }] },
+  { id: '3', title: 'Protest on Indonesian Parliament Resumes', date: '2025.03.02', time: '11.00', tags: [{ text: 'BBCA', color: 'red' }, { text: 'BBRI', color: 'red' }, { text: 'ANTM', color: 'green' }] },
 ];

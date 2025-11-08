@@ -87,7 +87,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
           </span>
         </a>
         <p className="text-xs text-gray-500 mt-4">
-          Disclaimer: This app provides data for informational use only...
+          Disclaimer: This app provides data-driven market insights for informational use only. You are responsible for your own investment decisions.
         </p>
       </div>
     </div>

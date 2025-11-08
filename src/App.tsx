@@ -3,6 +3,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./components/layout/Layout";
 import Dashboard from "./pages/Dashboard";
+import News from "./pages/News";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
 import Welcome from "./pages/Welcome";
@@ -25,9 +26,16 @@ const App: React.FC = () => {
             </Layout>
           }
         />
-
+        <Route
+          path="/news"
+          element={
+            <Layout title="News">
+              <News />
+            </Layout>
+          }
+        />
         {/* Redirect root to signup for now */}
-        <Route path="/" element={<Navigate to="/welcome" replace />} />
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
       </Routes>
     </BrowserRouter>
   );

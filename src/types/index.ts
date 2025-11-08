@@ -23,3 +23,27 @@ export interface Recommendation {
   returnForecast: number; // As a percentage (e.g., 10.5)
   reason: string;
 }
+
+export interface NewsTag {
+  text: string;
+  color: 'green' | 'red';
+}
+
+export interface TopNewsItem {
+  id: string;
+  date: string;
+  time: string;
+  sentiment: 'Positive' | 'Negative';
+  sentimentScore: number;
+  title: string;
+  body: string;
+  tags: NewsTag[];
+}
+
+export interface CompactNewsItem {
+  id: string;
+  title: string;
+  date: string;
+  time: string;
+  tags: NewsTag[];
+}
