@@ -2,20 +2,32 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { userService } from "../services";
+import { useUserStore } from "../store/useUserStore";
+import { watchlistService } from "../services/watchlist.service";
+import { useWatchlistStore } from "../store/useWatchlistStore";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
+  const setUser = useUserStore((state) => state.setUser);
+  const setWatchlist = useWatchlistStore((state) => state.setWatchlist);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement login logic
-    console.log("Login submitted:", formData);
-    toast.success("Login successful!");
-    navigate("/dashboard");
+    try {
+      const user = await userService.login(formData.email, formData.password);
+      setUser(user); // Store user in Zustand
+      const watchlist = await watchlistService.getWatchlist();
+      setWatchlist(watchlist); // Store watchlist in Zustand
+      toast.success("Login successful!");
+      navigate("/dashboard");
+    } catch {
+      toast.error("Login failed!");
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

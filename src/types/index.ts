@@ -1,4 +1,18 @@
 // src/types/index.ts
+
+// Re-export watchlist types
+export type { 
+  WatchlistResDto, 
+  WatchlistStocksResDto, 
+  StockResDto, 
+  IndustryResDto, 
+  SectorResDto,
+  WatchlistApiResponse 
+} from './watchlist.types';
+
+// Re-export stock price types
+export type { StockPriceData } from './stock.types';
+
 export interface NewsItem {
   id: string;
   date: string;
@@ -7,6 +21,7 @@ export interface NewsItem {
   tags: { text: string; bg: string; }[];
 }
 
+// Legacy interface - kept for backwards compatibility
 export interface WatchlistItem {
   id: string;
   ticker: string;
