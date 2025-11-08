@@ -1,5 +1,5 @@
 // src/components/dashboard/WatchlistCard.tsx
-import React from "react";
+import React, {useState} from "react";
 import { Card } from "../ui/Card";
 import { HiPlus, HiRefresh } from "react-icons/hi";
 import { useDashboardStore } from "../../store/useDashboardStore";
@@ -14,6 +14,8 @@ const WatchlistCard: React.FC = () => {
   } = useDashboardStore();
   const stocks = watchlist?.stocks ?? [];
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  
   const handleRefresh = () => {
     fetchStockPrices();
   };
@@ -27,7 +29,14 @@ const WatchlistCard: React.FC = () => {
     });
   };
 
+  const handleAddStock = (stock: StockSearchResult) => {
+    // In a real app, you'd call your zustand store here:
+    // e.g., addStockToWatchlist(stock.id);
+    console.log("Adding stock:", stock.ticker);
+  };
+
   return (
+    <>
     <Card className="p-6">
       <div className="flex justify-between items-center mb-4">
         <div>
@@ -50,7 +59,8 @@ const WatchlistCard: React.FC = () => {
               className={isPricesLoading ? "animate-spin" : ""}
             />
           </button>
-          <button className="text-gray-400 hover:text-white" title="Add stock">
+          <button onClick={() => setIsModalOpen(true)} 
+          className="text-gray-400 hover:text-white" title="Add stock">
             <HiPlus size={20} />
           </button>
         </div>
@@ -113,6 +123,14 @@ const WatchlistCard: React.FC = () => {
         </ul>
       )}
     </Card>
+    {/* --- 7. Render the modal --- */}
+      <AddStockModal 
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onAddStock={handleAddStock}
+      />
+      {/* --------------------------- */}
+    </>
   );
 };
 
