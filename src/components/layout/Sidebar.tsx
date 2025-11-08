@@ -1,16 +1,20 @@
-// src/components/layout/Sidebar.tsx
 import React from 'react';
 import { 
   HiOutlineChartPie, 
   HiOutlineNewspaper, 
   HiOutlinePresentationChartLine,
   HiOutlineUserCircle,
-  HiOutlineCog 
+  HiOutlineCog,
+  HiMenu // We still use this for the *close* button
 } from 'react-icons/hi';
-import { FaBell } from 'react-icons/fa';
 
-const Sidebar: React.FC = () => {
-  // In a real app, this would come from `react-router-dom`'s `useLocation`
+interface SidebarProps {
+  isOpen: boolean;
+  setIsOpen: (open: boolean) => void;
+}
+
+// This component is now MUCH simpler
+const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
   const activePage = 'Dashboard';
 
   const navItems = [
@@ -20,26 +24,35 @@ const Sidebar: React.FC = () => {
   ];
 
   return (
-    <div className="w-64 h-screen fixed left-0 top-0 bg-dark-secondary flex flex-col p-6">
-      {/* Header */}
-      <div className="flex justify-between items-center mb-10">
-        <h1 className="text-3xl font-bold text-white">Sooiq</h1>
-        <button className="text-gray-400 hover:text-white relative">
-          <FaBell size={20} />
-          <span className="absolute top-0 right-0 w-2 h-2 bg-accent-purple rounded-full"></span>
+    <div 
+      className={`w-64 h-screen fixed left-0 top-0 flex flex-col p-6 
+        transition-transform duration-300 ease-in-out z-30
+        ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+        bg-linear-140 from-[#04050D] to-[#16133c]`}
+    >
+      {/* Header: Logo and *Close* Button */}
+      <div className="flex items-center justify-between mb-10">
+        <h1 className="text-3xl font-bold text-white">
+          Sooiq
+        </h1>
+        <button 
+          onClick={() => setIsOpen(false)} // <-- This button now *only* closes
+          className="text-gray-400 hover:text-white"
+        >
+          <HiMenu size={26} />
         </button>
       </div>
 
-      {/* User Info */}
-      <div className="flex items-center gap-3 mb-10">
-        <HiOutlineUserCircle size={44} className="text-gray-400" />
+      {/* User Info (No opacity logic needed) */}
+      <div className="flex items-center gap-3 mb-10 overflow-hidden">
+        <HiOutlineUserCircle size={44} className="text-gray-400 flex-shrink-0" />
         <div>
-          <p className="text-white font-semibold">John Doe</p>
-          <p className="text-sm text-gray-400">@john.doe041</p>
+          <p className="text-white font-semibold whitespace-nowrap">John Doe</p>
+          <p className="text-sm text-gray-400 whitespace-nowrap">@john.doe041</p>
         </div>
       </div>
 
-      {/* Navigation */}
+      {/* Navigation (No opacity logic needed) */}
       <nav className="flex-grow">
         <ul>
           {navItems.map((item) => (
@@ -52,22 +65,29 @@ const Sidebar: React.FC = () => {
                     : 'text-gray-400 hover:bg-dark-tertiary hover:text-white'
                 }`}
               >
-                <item.icon size={22} />
-                <span className="font-medium">{item.name}</span>
+                <item.icon size={22} className="flex-shrink-0" />
+                <span className="font-medium">
+                  {item.name}
+                </span>
               </a>
             </li>
           ))}
         </ul>
       </nav>
 
-      {/* Footer / Settings */}
-      <div className="mt-auto">
-        <a href="#" className="flex items-center gap-3 p-3 text-gray-400 hover:text-white">
-          <HiOutlineCog size={22} />
-          <span className="font-medium">Settings</span>
+      {/* Footer / Settings (No opacity logic needed) */}
+      <div className="mt-auto overflow-hidden">
+        <a 
+          href="#" 
+          className="flex items-center gap-3 p-3 text-gray-400 hover:text-white"
+        >
+          <HiOutlineCog size={22} className="flex-shrink-0" />
+          <span className="font-medium">
+            Settings
+          </span>
         </a>
         <p className="text-xs text-gray-500 mt-4">
-          Disclaimer: This app provides data-driven market insights for informational use only. You are responsible for your own investment decisions.
+          Disclaimer: This app provides data for informational use only...
         </p>
       </div>
     </div>

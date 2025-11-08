@@ -8,7 +8,7 @@ import Dashboard from './pages/Dashboard';
 const App: React.FC = () => {
   return (
     // For now, we'll just render the Dashboard
-    <Layout>
+    <Layout title="Dashboard">
       <Dashboard />
     </Layout>
     

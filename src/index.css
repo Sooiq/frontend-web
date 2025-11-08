@@ -7,9 +7,9 @@
 /* 3. Define our custom theme (top-level) */
 @theme {
   --font-sans: "Poppins", "sans-serif";
-  --color-dark-primary: #0D0F17;
-  --color-dark-secondary: #1A1C2A;
-  --color-dark-tertiary: #2B2E3E;
+  --color-dark-primary: #101220;
+  --color-dark-secondary: #1A1C37;
+  --color-dark-tertiary: #5F6385;
   --color-accent-purple: #6C63FF;
   --color-accent-green: #10B981;
   --color-accent-red: #EF4444;
