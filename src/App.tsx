@@ -8,6 +8,7 @@ import News from "./pages/News";
 import NewsArticle from './pages/NewsArticle';
 import ForecastDashboard from "./pages/ForecastDashboard";
 import Stocks from "./pages/Stocks";
+import Settings from "./pages/Settings";
 
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
@@ -63,7 +64,14 @@ const App: React.FC = () => {
             </Layout>
           }
         />
-        
+        <Route
+          path="/settings"
+          element={
+            <Layout title="Settings">
+              <Settings />
+            </Layout>
+          }
+        />
         {/* Add a redirect for the base /forecast route */}
         <Route 
           path="/forecast" 

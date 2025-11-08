@@ -1,5 +1,5 @@
 // src/data/mockData.ts
-import type { NewsItem, WatchlistItem, Recommendation, TopNewsItem, CompactNewsItem, SectorForecast } from '../types';
+import type { NewsItem, WatchlistItem, Recommendation, TopNewsItem, CompactNewsItem, SectorForecast, StockSearchResult, StockDetail } from '../types';
 
 export const mockNews: NewsItem[] = [
   { id: '1', date: '2025.03.02', time: '14:58', title: 'BBCA Buyback', tags: [{ text: 'BBCA', bg: 'bg-red-500' }] },
@@ -88,3 +88,31 @@ export const mockSectorForecasts: SectorForecast[] = [
   { id: '7', sector: 'Financials', returnForecast: 10.4, sentimentScore: 65, reason: '200 billions investment on national banks' },
   { id: '8', sector: 'Healthcare', returnForecast: 10.4, sentimentScore: 68, reason: '200 billions investment on national banks' },
 ];
+
+export const mockSearchResults: StockSearchResult[] = [
+  { id: '1', ticker: 'BBCA', name: 'Bank Central Asia', logoUrl: '/logos/bbca.png' },
+  { id: '2', ticker: 'GOTO', name: 'GoTo Gojek Tokopedia', logoUrl: '/logos/goto.png' },
+  { id: '3', ticker: 'UNVR', name: 'Unilever Indonesia', logoUrl: '/logos/unvr.png' },
+  { id: '4DEMO', ticker: 'BUKA', name: 'Bukalapak', logoUrl: '/logos/buka.png' },
+];
+
+// Mock data for the selected stock detail
+export const mockStockDetail: StockDetail = {
+  id: '1',
+  ticker: 'BBCA',
+  name: 'Bank Central Asia',
+  logoUrl: '/logos/bbca.png',
+  price: 9000,
+  changePercent: 5.2,
+  returnForecasts: [
+    { period: '7 Days', change: 5.2 },
+    { period: '1 Month', change: 5.2 },
+    { period: '3 Months', change: 5.2 },
+  ],
+  keyInsights: [
+    '200T Buyback news',
+    'Strong breakout from 8.900 resistance',
+    'Strong public sentiment on Q4 results',
+  ],
+  analysis: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ac diam sed purus iaculis mollis. Nulla maximus libero ac eros vestibulum congue.'
+};

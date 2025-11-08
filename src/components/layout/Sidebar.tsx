@@ -9,7 +9,8 @@ import {
   HiMenu, // We still use this for the *close* button
   HiChevronDown, // For the dropdown
   HiOutlineViewGrid, // For the sub-menu
-  HiOutlineChartBar // For the sub-menu
+  HiOutlineChartBar, // For the sub-menu
+  HiOutlineLogout
 } from 'react-icons/hi';
 
 interface SidebarProps {
@@ -154,6 +155,19 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
             Settings
           </span>
         </Link>
+        <button
+          onClick={() => {
+            // In a real app, you'd call your auth context here
+            console.log("Logging out...");
+            // e.g., navigate('/login');
+          }}
+          className="flex items-center gap-3 p-3 text-gray-400 hover:text-white w-full"
+        >
+          <HiOutlineLogout size={22} className="flex-shrink-0" />
+          <span className="font-medium">
+            Logout
+          </span>
+        </button>
         <p className="text-xs text-gray-500 mt-4">
           Disclaimer: This app provides data-driven market insights for informational use only. You are responsible for your own investment decisions.
         </p>
