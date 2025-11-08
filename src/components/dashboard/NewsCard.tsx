@@ -3,6 +3,7 @@ import React from 'react';
 import { Card } from '../ui/Card';
 import { mockNews } from '../../data/mockData';
 import { HiOutlineChevronDown } from 'react-icons/hi';
+import NewsTag from '../news/NewsTag';
 
 const NewsCard: React.FC = () => {
   return (
@@ -20,13 +21,8 @@ const NewsCard: React.FC = () => {
             <p className="text-xs text-gray-500">{item.date} | {item.time}</p>
             <h3 className="text-md font-medium text-white my-1">{item.title}</h3>
             <div className="flex gap-2 mt-1">
-              {item.tags.map((tag, index) => (
-                <span 
-                  key={index} 
-                  className={`text-xs font-semibold px-2 py-0.5 rounded ${tag.bg} text-white`}
-                >
-                  {tag.text}
-                </span>
+              {item.tags.map((tag) => (
+                <NewsTag key={tag.text} tag={tag} />
               ))}
             </div>
           </div>

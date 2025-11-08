@@ -2,9 +2,9 @@
 import type { NewsItem, WatchlistItem, Recommendation, TopNewsItem, CompactNewsItem, SectorForecast, StockSearchResult, StockDetail } from '../types';
 
 export const mockNews: NewsItem[] = [
-  { id: '1', date: '2025.03.02', time: '14:58', title: 'BBCA Buyback', tags: [{ text: 'BBCA', bg: 'bg-red-500' }] },
-  { id: '2', date: '2025.03.02', time: '13:00', title: 'Russia attacked Ukraine', tags: [{ text: 'ANTM', bg: 'bg-green-500' }, { text: 'TINS', bg: 'bg-gray-500' }] },
-  { id: '3', date: '2025.03.02', time: '13:00', title: 'Trump Announced Higher Tariff Rate', tags: [{ text: 'BBCA', bg: 'bg-red-500' }, { text: 'TINS', bg: 'bg-gray-500' }] },
+  { id: '1', date: '2025.03.02', time: '14:58', title: 'BBCA Buyback', tags: [{ text: 'BBCA', color: 'green' }] },
+  { id: '2', date: '2025.03.02', time: '13:00', title: 'Russia attacked Ukraine', tags: [{ text: 'ANTM', color: 'green' }, { text: 'TINS', color: 'green' }] },
+  { id: '3', date: '2025.03.02', time: '13:00', title: 'Trump Announced Higher Tariff Rate', tags: [{ text: 'BBCA', color: 'red' }, { text: 'TINS', color: 'green' }] },
 ];
 
 export const mockWatchlist: WatchlistItem[] = [
@@ -105,9 +105,9 @@ export const mockStockDetail: StockDetail = {
   price: 9000,
   changePercent: 5.2,
   returnForecasts: [
-    { period: '7 Days', change: 5.2 },
-    { period: '1 Month', change: 5.2 },
-    { period: '3 Months', change: 5.2 },
+    { period: '1 Week', change: 5.2 },
+    { period: '1 Month', change: 7.5 },
+    { period: '1 Year', change: 19.8 },
   ],
   keyInsights: [
     '200T Buyback news',

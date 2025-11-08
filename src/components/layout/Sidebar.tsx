@@ -49,9 +49,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
     >
       {/* Header: Logo and *Close* Button */}
       <div className="flex items-center justify-between mb-10">
-        <h1 className="text-3xl font-bold text-white">
-          Sooiq
-        </h1>
+        
+        <img src="/sooiq_title.svg"></img>
         <button 
           onClick={() => setIsOpen(false)} // <-- This button now *only* closes
           className="text-gray-400 hover:text-white"

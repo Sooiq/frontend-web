@@ -18,7 +18,7 @@ export interface NewsItem {
   date: string;
   time: string;
   title: string;
-  tags: { text: string; bg: string; }[];
+  tags: NewsTag[];
 }
 
 // Legacy interface - kept for backwards compatibility

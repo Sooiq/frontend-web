@@ -17,16 +17,16 @@ const SectorsForecastCard: React.FC = () => {
             <p className="text-sm text-gray-300 mt-1">
               Return Forecast: 
               <span className={item.returnForecast > 0 ? 'text-accent-green' : 'text-accent-red'}>
-                {item.returnForecast > 0 ? '+' : ''}{item.returnForecast}%
+                {item.returnForecast > 0 ? ' +' : ' '}{item.returnForecast}%
               </span>
             </p>
             
             {/* New Sentiment Score line as requested */}
             <p className="text-sm text-gray-300 mt-1">
               Sentiment score: 
-              {/* I've used a yellow color as a placeholder */}
+              {/* yellow color as a placeholder */}
               <span className="text-yellow-400 font-medium">
-                {item.sentimentScore}%
+                {' '}{item.sentimentScore}%
               </span>
             </p>
 

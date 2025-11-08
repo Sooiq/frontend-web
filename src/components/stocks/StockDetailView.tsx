@@ -7,6 +7,7 @@ import { SetPriceAlertModal } from './SetPriceAlertModal';
 // Sub-components for clarity
 const StockHeaderCard: React.FC<{ stock: StockDetail }> = ({ stock }) => (
   <Card className="flex flex-col md:flex-row items-center justify-between p-4">
+    {/* Stock Info */}
     <div className="flex items-center gap-4">
       <img src={stock.logoUrl} alt={stock.ticker} className="w-12 h-12 rounded-full" />
       <div>
@@ -14,19 +15,28 @@ const StockHeaderCard: React.FC<{ stock: StockDetail }> = ({ stock }) => (
         <p className="text-sm text-gray-400">{stock.name}</p>
       </div>
     </div>
+    {/* Price & Forecast Info */}
     <div className="flex items-center gap-4 mt-4 md:mt-0">
+      {/* Price */}
       <div className="text-right">
         <p className="text-2xl font-bold text-white">{stock.price.toLocaleString()}</p>
         <p className="text-sm text-accent-green">+{stock.changePercent}%</p>
       </div>
+      {/* Divider */}
       <div className="hidden md:block w-px h-10 bg-gray-700 mx-2"></div>
-      <div className="text-left">
-        <p className="text-sm font-semibold text-white">Return Forecast</p>
-        <div className="flex gap-4 text-xs">
+      {/* Return Forecast (New Layout) */}
+        <div className="flex items-center gap-8">
+        <p className="text-lg font-semibold text-white">Return Forecast</p>
+        
+        <div className="flex gap-7">
           {stock.returnForecasts.map((item) => (
             <div key={item.period} className="text-center">
-              <span className="text-accent-green">+{item.change}%</span>
-              <span className="block text-gray-500">{item.period}</span>
+              <span className="block text-xl font-semibold text-accent-green">
+                +{item.change}%
+              </span>
+              <span className="block text-md text-gray-500 capitalize">
+                {item.period}
+              </span>
             </div>
           ))}
         </div>
