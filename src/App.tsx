@@ -1,28 +1,35 @@
 // src/App.tsx
-import React from 'react';
-import Layout from './components/layout/Layout';
-import Dashboard from './pages/Dashboard';
-// When you're ready, you'll add 'react-router-dom' here
-// import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import React from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Layout from "./components/layout/Layout";
+import Dashboard from "./pages/Dashboard";
+import SignUp from "./pages/SignUp";
+import Login from "./pages/Login";
+import Welcome from "./pages/Welcome";
 
 const App: React.FC = () => {
   return (
-    // For now, we'll just render the Dashboard
-    <Layout title="Dashboard">
-      <Dashboard />
-    </Layout>
-    
-    /* // When you add routing:
     <BrowserRouter>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/news" element={<div>News Page</div>} />
-          <Route path="/forecast" element={<div>Forecast Page</div>} />
-        </Routes>
-      </Layout>
+      <Routes>
+        {/* Authentication Routes (no layout) */}
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/welcome" element={<Welcome />} />
+
+        {/* Dashboard Routes (with layout) */}
+        <Route
+          path="/dashboard"
+          element={
+            <Layout title="Dashboard">
+              <Dashboard />
+            </Layout>
+          }
+        />
+
+        {/* Redirect root to signup for now */}
+        <Route path="/" element={<Navigate to="/welcome" replace />} />
+      </Routes>
     </BrowserRouter>
-    */
   );
 };
 
