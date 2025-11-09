@@ -8,7 +8,7 @@ const Welcome = () => {
       <div className="flex flex-col items-center justify-center gap-[18px]">
         <img src="/images/welcome_logo.svg" alt="Sooiq" />
         <button
-          className="py-[20px] px-[66px] border-2 border-white rounded-[25px] text-white text-[32px] font-bold hover:bg-white/10 transition-all duration-300 cursor-pointer"
+          className="py-5 px-[66px] border-2 border-white rounded-[25px] text-white text-[32px] font-bold hover:bg-white/10 transition-all duration-300 cursor-pointer"
           onClick={() => navigate("/signup")}
         >
           Sign Up

@@ -9,7 +9,7 @@ const Login: React.FC = () => {
   const { login } = useAuth();
   const [formData, setFormData] = useState({
     email: "",
-    password: "",
+    password: ""
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -30,14 +30,14 @@ const Login: React.FC = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
   };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-linear-to-r from-[#17133C00] to-[#191542] relative overflow-hidden px-8">
       <div className="flex flex-col items-center justify-center gap-[18px] mb-8">
-        <img src="/images/welcome_logo.svg" alt="Sooiq" className="h-[240px]" />
+        <img src="/images/welcome_logo.svg" alt="Sooiq" className="h-60" />
       </div>
 
       {/* Login Form */}

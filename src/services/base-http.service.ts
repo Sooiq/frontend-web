@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
- 
-import axios, { AxiosError } from 'axios';
+
+import axios, { AxiosError } from "axios";
 
 const instance = axios.create({
-  baseURL: `${import.meta.env.VITE_API_URL ?? ''}/api/v1`,
+  baseURL: `${import.meta.env.VITE_API_URL ?? ""}/api/v1`,
   timeout: 30000,
-  withCredentials: true,
+  withCredentials: true
 });
 
 instance.interceptors.request.use(
@@ -14,7 +14,7 @@ instance.interceptors.request.use(
   },
   async (error) => {
     throw new Error(error.message);
-  },
+  }
 );
 
 export default class BaseHttpService {
@@ -25,6 +25,8 @@ export default class BaseHttpService {
   }
 
   async get<T>(endpoint: string, options = {}): Promise<T> {
+    console.log(this.router);
+
     return instance
       .get(`/${endpoint}`, options)
       .then((result) => {
@@ -52,7 +54,9 @@ export default class BaseHttpService {
   }
 
   async delete<T>(endpoint: string, options = {}): Promise<T> {
-    return instance.delete(`/${endpoint}`, options).catch((error) => this.handleHttpError(error));
+    return instance
+      .delete(`/${endpoint}`, options)
+      .catch((error) => this.handleHttpError(error));
   }
 
   async patch<T>(endpoint: string, data = {}, options = {}): Promise<T> {
@@ -61,13 +65,14 @@ export default class BaseHttpService {
       .catch((error) => this.handleHttpError(error));
   }
 
-  handleHttpError(error: AxiosError<Record<string, any>, unknown>): any {  
-    console.error('handleHttpError', {
+  handleHttpError(error: AxiosError<Record<string, any>, unknown>): any {
+    console.error("handleHttpError", {
       error: JSON.stringify(error)
     });
 
     const statusCode = error?.response?.status;
-    const displayMessage = error.response?.data?.detail?.error_message ?? 'unknown error';
+    const displayMessage =
+      error.response?.data?.detail?.error_message ?? "unknown error";
 
     if (!statusCode || statusCode >= 300) {
       throw new Error(displayMessage);
