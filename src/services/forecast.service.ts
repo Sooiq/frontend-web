@@ -5,7 +5,7 @@ const PATH = 'forecasts';
 
 class ForecastService extends BaseHttpService {
   async getStockForecastByTicker(ticker: string): Promise<StockForecastResDto[]> {
-    const body = await this.get<StockForecastApiResponse>(`${PATH}/stocks/${ticker}`);
+    const body = await this.get<StockForecastApiResponse>(`${PATH}/stocks/${ticker}?generate=true`);
     return body.result;
   }
 

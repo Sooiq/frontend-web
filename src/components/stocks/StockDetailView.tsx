@@ -8,6 +8,7 @@ import { forecastService } from "../../services/forecast.service";
 import type { StockForecastResDto } from "../../types/forecast.types";
 import { watchlistService } from "../../services/watchlist.service";
 import { toast } from "react-toastify";
+import TradingViewWidget from "./Chart";
 
 // Sub-components for clarity
 const StockHeaderCard: React.FC<{
@@ -15,13 +16,28 @@ const StockHeaderCard: React.FC<{
   price: StockPriceData | null;
 }> = ({ stock, price }) => {
   const [forecast, setForecast] = useState<StockForecastResDto[]>([]);
+  const [isLoadingForecast, setIsLoadingForecast] = useState(true);
 
   useEffect(() => {
     const getForecast = async () => {
-      const forecast = await forecastService.getStockForecastByTicker(
-        stock.ticker
-      );
-      setForecast(forecast);
+      try {
+        setIsLoadingForecast(true);
+        const data = await forecastService.getStockForecastByTicker(
+          stock.ticker
+        );
+        // Ensure we always have an array
+        if (Array.isArray(data)) {
+          setForecast(data);
+        } else {
+          console.warn("Forecast data is not an array:", data);
+          setForecast([]);
+        }
+      } catch (error) {
+        console.error("Failed to fetch forecast:", error);
+        setForecast([]);
+      } finally {
+        setIsLoadingForecast(false);
+      }
     };
     getForecast();
   }, [stock.ticker]);
@@ -58,16 +74,26 @@ const StockHeaderCard: React.FC<{
           <p className="text-lg font-semibold text-white">Return Forecast</p>
 
           <div className="flex gap-7">
-            {forecast.map((item) => (
-              <div key={item.id} className="text-center">
-                <span className="block text-xl font-semibold text-accent-green">
-                  +{item.return_forecast_percentage.toFixed(2)}%
-                </span>
-                <span className="block text-md text-gray-500 capitalize">
-                  {item.reason}
-                </span>
-              </div>
-            ))}
+            {isLoadingForecast && (
+              <span className="text-gray-400">Loading...</span>
+            )}
+
+            {!isLoadingForecast && forecast.length === 0 && (
+              <span className="text-gray-400">No forecast available</span>
+            )}
+
+            {!isLoadingForecast &&
+              forecast.length > 0 &&
+              forecast.map((item) => (
+                <div key={item.id} className="text-center">
+                  <span className="block text-xl font-semibold text-accent-green">
+                    +{item.return_forecast_percentage.toFixed(2)}%
+                  </span>
+                  <span className="block text-md text-gray-500 capitalize">
+                    {item.reason || "N/A"}
+                  </span>
+                </div>
+              ))}
           </div>
         </div>
       </div>
@@ -96,9 +122,9 @@ const AnalysisCard: React.FC<{ analysis: string }> = ({ analysis }) => (
   </Card>
 );
 
-const CandlestickChart: React.FC = () => (
-  <Card className="h-96 flex items-center justify-center">
-    <p className="text-gray-500">candlestick chart</p>
+const CandlestickChart: React.FC<{ ticker: string }> = ({ ticker }) => (
+  <Card className="h-[600px] flex items-center justify-center">
+    <TradingViewWidget ticker={ticker} exchange="NASDAQ" />
   </Card>
 );
 
@@ -147,7 +173,7 @@ export const StockDetailView: React.FC<{
       {/* Row 3: Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
-          <CandlestickChart />
+          <CandlestickChart ticker={stock.ticker} />
         </div>
         <div className="lg:col-span-1 space-y-6">
           <KeyInsightsCard insights={[]} />
