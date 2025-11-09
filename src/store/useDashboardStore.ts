@@ -5,7 +5,7 @@ import type { SectorForecastResDto, StockForecastResDto } from '../types/forecas
 import { userService } from '../services/user.service';
 import { forecastService } from '../services/forecast.service';
 import type { StockPriceData } from '../types/stock.types';
-import type { WatchlistResDto } from '../types/watchlist.types';
+import type { StockResDto, WatchlistResDto } from '../types/watchlist.types';
 import { watchlistService } from '../services/watchlist.service';
 import { stockService } from '../services/stock.service';
 
@@ -19,6 +19,7 @@ interface DashboardState {
   isPricesLoading: boolean;
   lastPriceUpdate: string | null;
   error: string | null;
+  stocks: StockResDto[];
   postLogin: () => Promise<void>;
   setIsLoading: (isLoading: boolean) => void;
   setUser: (user: UserResDto) => void;
@@ -33,6 +34,7 @@ interface DashboardState {
   setWatchlist: (watchlist: WatchlistResDto) => void;
   fetchWatchlist: () => Promise<void>;
   fetchStockPrices: () => Promise<void>;
+  fetchStocks: () => Promise<void>;
 }
 
 export const useDashboardStore = create<DashboardState>()(
@@ -72,7 +74,9 @@ export const useDashboardStore = create<DashboardState>()(
       isPricesLoading: false,
       lastPriceUpdate: null,
       error: null,
+      stocks: [],
       postLogin: async () => {
+        try{
         set({ isLoading: true });
         const user = await userService.getMe();
         set({ user });
@@ -81,7 +85,14 @@ export const useDashboardStore = create<DashboardState>()(
         await get().fetchStockPrices();
         await get().fetchStockForecast();
         await get().fetchSectorForecast();
-        set({ isLoading: false });
+        await get().fetchStocks();
+        set({ error: null });
+        } catch (error) { 
+          console.error('Failed to post login:', error);
+          set({ error: error instanceof Error ? error.message : 'Failed to post login', isLoading: false });
+        } finally {
+          set({ isLoading: false });
+        }
       },
       setWatchlist: (watchlist) => 
         set({ watchlist }),
@@ -153,6 +164,10 @@ export const useDashboardStore = create<DashboardState>()(
       fetchUser: async () => {
         const user = await userService.getMe();
         set({ user });
+      },
+      fetchStocks: async () => {
+        const stocks = await stockService.getAllStocks();
+        set({ stocks });
       },
     }),
     {

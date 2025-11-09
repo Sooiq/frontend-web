@@ -1,40 +1,44 @@
-import React, { useState, useEffect } from 'react';
-import { HiSearch } from 'react-icons/hi';
-import { mockSearchResults } from '../../data/mockData';
-import { StockSearchResult, StockDetail } from '../../types';
-import { mockStockDetail } from '../../data/mockData'; // We'll use this to "select"
+import React, { useState, useEffect } from "react";
+import { HiSearch } from "react-icons/hi";
+import type { StockPriceData, StockResDto } from "../../types";
+import { useDashboardStore } from "../../store/useDashboardStore";
+import { stockService } from "../../services/stock.service";
 
 interface StockSearchBarProps {
-  onStockSelect: (stock: StockDetail | null) => void;
+  onStockSelect: (stock: StockResDto | null) => void;
+  onPriceSelect: (price: StockPriceData) => void;
 }
 
-export const StockSearchBar: React.FC<StockSearchBarProps> = ({ onStockSelect }) => {
-  const [query, setQuery] = useState('');
-  const [results, setResults] = useState<StockSearchResult[]>([]);
+export const StockSearchBar: React.FC<StockSearchBarProps> = ({
+  onStockSelect,
+  onPriceSelect,
+}) => {
+  const stocks = useDashboardStore((state) => state.stocks);
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState<StockResDto[]>([]);
   const [isFocused, setIsFocused] = useState(false);
 
   useEffect(() => {
     if (query.length > 0) {
       // In a real app, you'd fetch this. We'll filter mock data.
-      const filteredResults = mockSearchResults.filter(
+      const filteredResults = stocks.filter(
         (stock) =>
           stock.ticker.toLowerCase().includes(query.toLowerCase()) ||
-          stock.name.toLowerCase().includes(query.toLowerCase())
+          stock.company_name.toLowerCase().includes(query.toLowerCase())
       );
       setResults(filteredResults);
     } else {
       setResults([]);
     }
-  }, [query]);
+  }, [query, stocks]);
 
-  const handleSelect = (result: StockSearchResult) => {
-    // In a real app, you'd now fetch the *details* for this result.
-    // For now, we'll just return the full mockStockDetail.
-    console.log(result);
-    onStockSelect(mockStockDetail);
-    setQuery('');
+  const handleSelect = async (result: StockResDto) => {
+    onStockSelect(result);
+    setQuery("");
     setResults([]);
     setIsFocused(false);
+    const price = await stockService.getPrice(result.ticker);
+    onPriceSelect(price);
   };
 
   return (
@@ -66,10 +70,16 @@ export const StockSearchBar: React.FC<StockSearchBarProps> = ({ onStockSelect })
                   onClick={() => handleSelect(result)}
                   className="flex items-center gap-3 p-3 cursor-pointer hover:bg-dark-tertiary"
                 >
-                  <img src={result.logoUrl} alt={result.ticker} className="w-8 h-8 rounded-full" />
+                  <img
+                    src={result.logo_url}
+                    alt={result.ticker}
+                    className="w-8 h-8 rounded-full"
+                  />
                   <div>
                     <p className="font-semibold text-white">{result.ticker}</p>
-                    <p className="text-sm text-gray-400">{result.name}</p>
+                    <p className="text-sm text-gray-400">
+                      {result.company_name}
+                    </p>
                   </div>
                 </li>
               ))}

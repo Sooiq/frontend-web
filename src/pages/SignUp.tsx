@@ -2,10 +2,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { userService } from "../services/user.service";
+import { useAuth } from "../context/AuthContext";
 
 const SignUp: React.FC = () => {
   const navigate = useNavigate();
+  const { signup } = useAuth();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -22,8 +23,14 @@ const SignUp: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!passwordsMatch) {
+      toast.error("Passwords do not match!");
+      return;
+    }
+
     try {
-      await userService.register({
+      await signup({
         first_name: formData.firstName,
         last_name: formData.lastName,
         email: formData.email,
@@ -31,8 +38,13 @@ const SignUp: React.FC = () => {
         password: formData.password,
         country_of_residence: "US",
       });
-      toast.success("Sign up successful!");
-      navigate("/login");
+
+      toast.success("Sign up successful! Redirecting...");
+
+      // Small delay to ensure state updates propagate
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 100);
     } catch (error) {
       toast.error(`Sign up failed: ${error}`);
     }

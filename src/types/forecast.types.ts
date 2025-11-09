@@ -15,6 +15,7 @@ export interface SectorForecastResDto {
   sector_name: string;
   return_forecast_percentage: number;
   reason?: string | null;
+  sentiment_score?: number | null;
   created_at: string;
   updated_at: string;
 }

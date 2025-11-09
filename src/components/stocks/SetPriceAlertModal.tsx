@@ -1,45 +1,73 @@
-import React, { useState } from 'react';
-import { HiX } from 'react-icons/hi';
-import { StockDetail } from '../../types';
+import React, { useEffect, useState } from "react";
+import { HiX } from "react-icons/hi";
+import type { StockResDto } from "../../types/watchlist.types";
+import { stockService, watchlistService } from "../../services";
+import type { StockPriceData } from "../../types/stock.types";
+import { toast } from "react-toastify";
 
 interface SetPriceAlertModalProps {
   isOpen: boolean;
   onClose: () => void;
-  stock: StockDetail;
+  stock: StockResDto;
 }
 
-export const SetPriceAlertModal: React.FC<SetPriceAlertModalProps> = ({ isOpen, onClose, stock }) => {
-  const [targetPrice, setTargetPrice] = useState('');
-  const [error, setError] = useState('');
+export const SetPriceAlertModal: React.FC<SetPriceAlertModalProps> = ({
+  isOpen,
+  onClose,
+  stock,
+}) => {
+  const [targetPrice, setTargetPrice] = useState("");
+  const [currentPrice, setCurrentPrice] = useState<StockPriceData | null>(null);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const fetchPrice = async () => {
+      const price = await stockService.getPrice(stock.ticker);
+      setCurrentPrice(price);
+    };
+    fetchPrice();
+  }, [stock.ticker]);
 
   if (!isOpen) {
     return null;
   }
 
-  const handleConfirm = () => {
-    const price = parseFloat(targetPrice);
-    if (isNaN(price) || price <= 0) {
-      setError('Please enter a valid price greater than 0.');
+  const handleConfirm = async () => {
+    const price = Number.parseFloat(targetPrice);
+    if (Number.isNaN(price) || price <= 0) {
+      setError("Please enter a valid price greater than 0.");
       return;
     }
     if (price > 1000000) {
-      setError('Price must be less than $1,000,000.');
+      setError("Price must be less than $1,000,000.");
       return;
     }
     // In a real app, you'd save this alert
     console.log(`Alert set for ${stock.ticker} at ${price}`);
-    setError('');
-    onClose();
+    try {
+      await watchlistService.setPriceAlert(stock.id, price);
+      setError("");
+      onClose();
+    } catch (error) {
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : `An unknown error occurred. ${error}`
+      );
+      setError(
+        error instanceof Error ? error.message : "An unknown error occurred"
+      );
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setError(''); // Clear error on change
+    setError(""); // Clear error on change
     setTargetPrice(e.target.value);
   };
 
   return (
     // 1. Backdrop Overlay
-    <div 
+    <div
       className="fixed inset-0 bg-black/60 z-40 flex items-center justify-center"
       onClick={onClose}
     >
@@ -49,7 +77,7 @@ export const SetPriceAlertModal: React.FC<SetPriceAlertModalProps> = ({ isOpen, 
         onClick={(e) => e.stopPropagation()} // Prevent click-through
       >
         {/* Close Button */}
-        <button 
+        <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-400 hover:text-white"
         >
@@ -64,15 +92,23 @@ export const SetPriceAlertModal: React.FC<SetPriceAlertModalProps> = ({ isOpen, 
         {/* Stock Info */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
-            <img src={stock.logoUrl} alt={stock.ticker} className="w-10 h-10 rounded-full" />
+            <img
+              src={stock.logo_url}
+              alt={stock.ticker}
+              className="w-10 h-10 rounded-full"
+            />
             <div>
               <p className="text-lg font-semibold text-white">{stock.ticker}</p>
-              <p className="text-sm text-gray-400">{stock.name}</p>
+              <p className="text-sm text-gray-400">{stock.company_name}</p>
             </div>
           </div>
           <div className="text-right">
-            <p className="text-lg font-semibold text-white">{stock.price.toLocaleString()}</p>
-            <p className="text-sm text-accent-green">+{stock.changePercent}%</p>
+            <p className="text-lg font-semibold text-white">
+              {currentPrice?.price.toLocaleString()}
+            </p>
+            <p className="text-sm text-accent-green">
+              +{currentPrice?.changePercent}%
+            </p>
           </div>
         </div>
 
@@ -82,14 +118,16 @@ export const SetPriceAlertModal: React.FC<SetPriceAlertModalProps> = ({ isOpen, 
             type="number"
             value={targetPrice}
             onChange={handleChange}
-            placeholder={stock.price.toLocaleString()} // Use dynamic placeholder
+            placeholder={currentPrice?.price.toLocaleString()}
             min="0" // Set min value
             step="0.01"
             className="w-full text-center text-4xl font-bold text-white bg-transparent 
               border-b-2 border-gray-700 focus:border-accent-purple 
               focus:outline-none focus:ring-0"
           />
-          {error && <p className="text-red-500 text-sm text-center mt-2">{error}</p>}
+          {error && (
+            <p className="text-red-500 text-sm text-center mt-2">{error}</p>
+          )}
         </div>
 
         {/* Confirm Button */}

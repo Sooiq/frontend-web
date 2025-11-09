@@ -1,18 +1,18 @@
 // src/components/dashboard/StockForecastCard.tsx
-import React from 'react';
-import { Card } from '../ui/Card';
-import { mockBuys, mockSells } from '../../data/mockData';
-import type { Recommendation } from '../../types';
-import { HiOutlineChevronDown } from 'react-icons/hi';
+import React from "react";
+import { Card } from "../ui/Card";
+import { HiOutlineChevronDown } from "react-icons/hi";
+import { useDashboardStore } from "../../store/useDashboardStore";
+import type { StockForecastResDto } from "../../types/forecast.types";
 
 // Sub-component to render the recommendation tables
 const RecommendationTable: React.FC<{
   title: string;
-  items: Recommendation[];
-  type: 'buy' | 'sell';
+  items: StockForecastResDto[];
+  type: "buy" | "sell";
 }> = ({ title, items, type }) => {
-  const isBuy = type === 'buy';
-  const apyColor = isBuy ? 'text-accent-green' : 'text-accent-red';
+  const isBuy = type === "buy";
+  const apyColor = isBuy ? "text-accent-green" : "text-accent-red";
 
   return (
     <div className="mb-6">
@@ -28,10 +28,16 @@ const RecommendationTable: React.FC<{
           </thead>
           <tbody>
             {items.map((item) => (
-              <tr key={item.id} className="border-b border-gray-700 last:border-b-0">
-                <td className="py-3 pr-4 font-medium text-white">{item.ticker}</td>
+              <tr
+                key={item.id}
+                className="border-b border-gray-700 last:border-b-0"
+              >
+                <td className="py-3 pr-4 font-medium text-white">
+                  {item.ticker}
+                </td>
                 <td className={`py-3 pr-4 font-semibold ${apyColor}`}>
-                  {isBuy ? '+' : ''}{item.returnForecast}%
+                  {isBuy ? "+" : ""}
+                  {item.return_forecast_percentage.toFixed(2)}%
                 </td>
                 <td className="py-3 text-gray-300">{item.reason}</td>
               </tr>
@@ -44,17 +50,35 @@ const RecommendationTable: React.FC<{
 };
 
 const StockForecastCard: React.FC = () => {
+  const stockForecast = useDashboardStore((state) => state.stockForecast);
+  const buyRecommendations = stockForecast.filter(
+    (item) => item.return_forecast_percentage > 0
+  );
+  const sellRecommendations = stockForecast.filter(
+    (item) => item.return_forecast_percentage < 0
+  );
+
   return (
     <Card className="p-6">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-semibold text-white">Stock Forecast Summary</h2>
+        <h2 className="text-xl font-semibold text-white">
+          Stock Forecast Summary
+        </h2>
         <button className="flex items-center gap-1 text-sm text-gray-400 hover:text-white">
           7 Days <HiOutlineChevronDown />
         </button>
       </div>
 
-      <RecommendationTable title="Top Buy Recommendation" items={mockBuys} type="buy" />
-      <RecommendationTable title="Top Sell Recommendation" items={mockSells} type="sell" />
+      <RecommendationTable
+        title="Top Buy Recommendation"
+        items={buyRecommendations}
+        type="buy"
+      />
+      <RecommendationTable
+        title="Top Sell Recommendation"
+        items={sellRecommendations}
+        type="sell"
+      />
     </Card>
   );
 };

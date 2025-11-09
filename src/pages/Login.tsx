@@ -2,10 +2,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { userService } from "../services";
+import { useAuth } from "../context/AuthContext";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -14,9 +15,13 @@ const Login: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await userService.login(formData.email, formData.password);
-      toast.success("Login successful!");
-      navigate("/dashboard");
+      await login(formData.email, formData.password);
+      toast.success("Login successful! Redirecting...");
+
+      // Small delay to ensure state updates propagate
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 100);
     } catch (error) {
       toast.error(`Login failed! ${error}`);
     }

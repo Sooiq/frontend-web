@@ -7,18 +7,19 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { userService } from "../services";
 import { useDashboardStore } from "../store/useDashboardStore";
+import { useAuth } from "../context/AuthContext";
 
 const Settings: React.FC = () => {
   // Hard-coded mock data
   const user = useDashboardStore((state) => state.user);
-  const clearUser = useDashboardStore((state) => state.clearUser);
+  const { logout, setUser } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
-      await userService.logout();
-      clearUser();
+      await logout();
       navigate("/login");
+      toast.success("Logged out successfully");
     } catch (error) {
       toast.error(`Logout failed: ${error}`);
     }
@@ -27,8 +28,9 @@ const Settings: React.FC = () => {
   const handleDeleteAccount = async () => {
     try {
       await userService.deleteUser();
-      clearUser();
+      setUser(null);
       navigate("/login");
+      toast.success("Account deleted successfully");
     } catch (error) {
       toast.error(`Delete account failed: ${error}`);
     }

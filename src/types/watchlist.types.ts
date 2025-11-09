@@ -22,6 +22,7 @@ export interface StockResDto {
   country: string;
   industry: IndustryResDto;
   description: string;
+  logo_url: string;
   created_at: string;
   updated_at: string;
 }
@@ -43,4 +44,9 @@ export interface WatchlistResDto {
 export interface WatchlistApiResponse {
   message: string;
   result: WatchlistResDto;
+}
+
+export interface PriceAlertReqDto {
+  stock_id: string;
+  price_alert?: number | null;
 }

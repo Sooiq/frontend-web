@@ -94,8 +94,8 @@ const App: React.FC = () => {
             path="/forecast"
             element={<Navigate to="/forecast/dashboard" replace />}
           />
-          {/* Redirect root to login for now */}
-          <Route path="/" element={<Navigate to="/login" replace />} />
+          {/* Redirect root to welcome for now */}
+          <Route path="/" element={<Navigate to="/welcome" replace />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>

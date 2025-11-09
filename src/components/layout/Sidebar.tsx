@@ -12,9 +12,9 @@ import {
   HiOutlineChartBar, // For the sub-menu
   HiOutlineLogout,
 } from "react-icons/hi";
-import { userService } from "../../services";
 import { toast } from "react-toastify";
-import { useUserStore } from "../../store";
+import { useDashboardStore } from "../../store";
+import { useAuth } from "../../context/AuthContext";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -25,9 +25,8 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
   const location = useLocation();
   const pathname = location.pathname;
-  const user = useUserStore((state) => state.user);
-  console.log(user);
-  const clearUser = useUserStore((state) => state.clearUser);
+  const user = useDashboardStore((state) => state.user);
+  const { logout } = useAuth();
 
   // State to manage the dropdown
   const [isForecastOpen, setIsForecastOpen] = useState(false);
@@ -50,9 +49,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
 
   const handleLogout = async () => {
     try {
-      await userService.logout();
-      clearUser();
+      await logout();
       navigate("/login");
+      toast.success("Logged out successfully");
     } catch (error) {
       toast.error(`Logout failed: ${error}`);
     }
