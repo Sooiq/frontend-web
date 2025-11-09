@@ -1,14 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import { HiX, HiSearch } from 'react-icons/hi';
-import { StockSearchResult } from '../../types'; // Assuming this type exists
+import React, { useState, useEffect } from "react";
+import { HiX, HiSearch } from "react-icons/hi";
+import type { StockSearchResult } from "../../types"; // Assuming this type exists
 
 // Hardcoded data for the search results, as requested.
 const mockSearchResults: StockSearchResult[] = [
-  { id: '1', ticker: 'BBCA', name: 'Bank Central Asia', logoUrl: '/logos/bbca.png' },
-  { id: '2', ticker: 'GOTO', name: 'GoTo Gojek Tokopedia', logoUrl: '/logos/goto.png' },
-  { id: '3', ticker: 'UNVR', name: 'Unilever Indonesia', logoUrl: '/logos/unvr.png' },
-  { id: '4', ticker: 'BUKA', name: 'Bukalapak', logoUrl: '/logos/buka.png' },
-  { id: '5', ticker: 'TSLA', name: 'Tesla, Inc.', logoUrl: '/logos/tsla.png' },
+  {
+    id: "1",
+    ticker: "BBCA",
+    name: "Bank Central Asia",
+    logoUrl: "/logos/bbca.png"
+  },
+  {
+    id: "2",
+    ticker: "GOTO",
+    name: "GoTo Gojek Tokopedia",
+    logoUrl: "/logos/goto.png"
+  },
+  {
+    id: "3",
+    ticker: "UNVR",
+    name: "Unilever Indonesia",
+    logoUrl: "/logos/unvr.png"
+  },
+  { id: "4", ticker: "BUKA", name: "Bukalapak", logoUrl: "/logos/buka.png" },
+  { id: "5", ticker: "TSLA", name: "Tesla, Inc.", logoUrl: "/logos/tsla.png" }
 ];
 
 interface AddStockModalProps {
@@ -17,8 +32,12 @@ interface AddStockModalProps {
   onAddStock: (stock: StockSearchResult) => void;
 }
 
-export const AddStockModal: React.FC<AddStockModalProps> = ({ isOpen, onClose, onAddStock }) => {
-  const [query, setQuery] = useState('');
+export const AddStockModal: React.FC<AddStockModalProps> = ({
+  isOpen,
+  onClose,
+  onAddStock
+}) => {
+  const [query, setQuery] = useState("");
   const [results, setResults] = useState<StockSearchResult[]>([]);
 
   // Filter results when query changes
@@ -46,7 +65,7 @@ export const AddStockModal: React.FC<AddStockModalProps> = ({ isOpen, onClose, o
 
   return (
     // Backdrop
-    <div 
+    <div
       className="fixed inset-0 bg-black/60 z-40 flex items-center justify-center"
       onClick={onClose}
     >
@@ -87,7 +106,11 @@ export const AddStockModal: React.FC<AddStockModalProps> = ({ isOpen, onClose, o
                   onClick={() => handleSelect(result)}
                   className="flex items-center gap-3 p-3 cursor-pointer rounded-lg hover:bg-dark-tertiary"
                 >
-                  <img src={result.logoUrl} alt={result.ticker} className="w-8 h-8 rounded-full" />
+                  <img
+                    src={result.logoUrl}
+                    alt={result.ticker}
+                    className="w-8 h-8 rounded-full"
+                  />
                   <div>
                     <p className="font-semibold text-white">{result.ticker}</p>
                     <p className="text-sm text-gray-400">{result.name}</p>
